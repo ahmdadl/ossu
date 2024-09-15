@@ -14,3 +14,8 @@ def rem(x, a):
         
 print(rem(2, 5))
 print(rem(7, 5))
+
+lt = 15
+gt = 3
+
+assert( gt <= 0 <= lt ), 'number is not between '
