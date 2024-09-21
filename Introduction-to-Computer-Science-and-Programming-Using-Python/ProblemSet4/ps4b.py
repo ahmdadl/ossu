@@ -97,6 +97,21 @@ def compPlayHand(hand, wordList, n):
 
     
 #
+# lets user choose who plays
+#
+def whoPlays(hand, wordList, n):
+    while True:
+        player = input("Enter a 'u' or a 'c': ")
+        if player == 'u':
+            playHand(hand, wordList, HAND_SIZE)
+        elif player == 'c':
+            compPlayHand(hand, wordList, HAND_SIZE)
+        elif player == '.':
+            break
+        else:
+            print('Invalid Command')
+    
+#
 # Problem #6: Playing a game
 #
 #
@@ -124,8 +139,24 @@ def playGame(wordList):
 
     wordList: list (string)
     """
-    # TO DO... <-- Remove this comment when you code this function
-    print("playGame not yet implemented.") # <-- Remove this when you code this function
+    handsPlayed = []
+    while True:
+        userInput = input('Enter n to deal a new hand, r to replay the last hand, or e to end game: ')
+        
+        if userInput == 'e':
+            break
+        elif userInput == 'n':
+            randomLen = random.randint(HAND_SIZE, HAND_SIZE * 2)
+            newWord = ''.join(random.choices(string.ascii_lowercase, k=randomLen))
+            handsPlayed.append(newWord)
+            whoPlays(getFrequencyDict(newWord), wordList, HAND_SIZE)
+        elif userInput == 'r':
+            if len(handsPlayed) == 0:
+                print('You have not played a hand yet. Please play a new hand first!')
+            else:
+                whoPlays(getFrequencyDict(handsPlayed[-1]), wordList, HAND_SIZE)
+        else:
+            print('Invalid command.')
 
         
 #
