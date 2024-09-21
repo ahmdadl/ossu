@@ -82,8 +82,18 @@ class Hand(object):
         word: string
         returns: Boolean (if the word was or was not made)
         """
-        # Your code here
-        raise NotImplementedError()
+        print(self.hand)
+        for l in word:
+            if not self.hand.get(l):
+                return False
+            else:
+                value = int(self.hand.get(l))
+                if value > 1:
+                    self.hand[l] = value - 1
+                else:
+                    self.hand.pop(l)
+        
+        return True
 
     
 myHand = Hand(7)
@@ -95,4 +105,8 @@ print(myHand)
 print(myHand.calculateLen())
 
 myHand.update('za')
+print(myHand)
+myHand.update('za')
+print(myHand)
+myHand.update('ms')
 print(myHand)
