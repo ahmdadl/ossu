@@ -130,13 +130,20 @@ class Message(object):
         Returns: the message text (string) in which every character is shifted
              down the alphabet by the input shift
         '''
-        shiftDict = self.build_shift_dict(shift)
         cipher = []
-        for c in self.message_text:
-            if c not in string.ascii_letters:
-                cipher.append(c)
+    
+        for char in self.message_text:
+            if char.islower():
+                # Shift within lowercase letters
+                new_char = chr(((ord(char) - ord('a') + shift) % 26) + ord('a'))
+                cipher.append(new_char)
+            elif char.isupper():
+                # Shift within uppercase letters
+                new_char = chr(((ord(char) - ord('A') + shift) % 26) + ord('A'))
+                cipher.append(new_char)
             else:
-                cipher.append(shiftDict[c])
+                # Non-alphabet characters are added as is
+                cipher.append(char)
         
         return ''.join(cipher)
         
@@ -235,16 +242,21 @@ class CiphertextMessage(Message):
         Returns: a tuple of the best shift value used to decrypt the message
         and the decrypted message text using that shift value
         '''
-        bestTub = (0, '')
-        for shift in range(26):
-            cipherDict = self.build_shift_dict(shift)
-            decryptedWord = []
-            for c in list(self.message_text):
-                decryptedWord.append(self.getKeyByValue(cipherDict, c))
-            if len(decryptedWord) and is_word(self.valid_words, ''.join(decryptedWord)):
-                return (shift, ''.join(decryptedWord))
+        max_valid_words = 0
+        best_shift = 0
+        best_decrypted_message = self.message_text
 
-        return (shift, decryptedWord)
+        for shift in range(26):
+            decrypted_text = self.apply_shift(shift)  # Apply shift to decrypt
+            words = decrypted_text.split()  # Split decrypted text into words
+            valid_word_count = sum([is_word(self.valid_words, word) for word in words])  # Count valid words
+
+            if valid_word_count > max_valid_words:
+                max_valid_words = valid_word_count
+                best_shift = shift
+                best_decrypted_message = decrypted_text
+
+        return (best_shift, best_decrypted_message)
     
     def getKeyByValue(self, dict, value):
         for d, val in dict.items():
