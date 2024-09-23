@@ -49,7 +49,9 @@ def get_story_string():
     """
     Returns: a joke in encrypted text.
     """
-    f = open("story.txt", "r")
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(current_dir, "story.txt")
+    f = open(file_path, "r")
     story = str(f.read())
     f.close()
     return story
@@ -258,11 +260,14 @@ class CiphertextMessage(Message):
 
         return (best_shift, best_decrypted_message)
     
-    def getKeyByValue(self, dict, value):
-        for d, val in dict.items():
-            if val == value:
-                return d
-        return ''
+    def decrypt_story(self):
+        encrypted_story = get_story_string()
+    
+        # Create a CiphertextMessage object with the encrypted story
+        ciphertext_message = CiphertextMessage(encrypted_story)
+        
+        # Decrypt the message
+        return ciphertext_message.decrypt_message()
             
             
 
@@ -275,6 +280,8 @@ print('Actual Output:', plaintext.get_message_text_encrypted())
 ciphertext = CiphertextMessage('jgnnq')
 print('Expected Output:', (24, 'hello'))
 print('Actual Output:', ciphertext.decrypt_message())
+
+print('Actual Output:', ciphertext.decrypt_story())
 
 m = Message('asd')
 print(m.apply_shift(3))
