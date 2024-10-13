@@ -13,3 +13,11 @@
 (define CD2 9)     ; started
 (define CD3 2)     ; almose done
 (define CD4 true)  ; completed
+
+(define (fn-for-countDown cd)
+  (cond
+      [(false? cd) (...)]
+      [(and (number? cd) (>= cd 1) (<= cd 10) ) (...cd)]
+      [(true? cd) (...)]
+    )
+)
