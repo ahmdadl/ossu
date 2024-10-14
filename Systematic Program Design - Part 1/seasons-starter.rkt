@@ -17,6 +17,9 @@
 
 ; (define (next sn) "summer") ; stub
 
+
+;; Next -> Season
+;; produce next season name
 (define (next sn)
   (cond
      [(string=? sn "summer") "fall"]
