@@ -15,10 +15,20 @@
 (check-expect (asile? 50) false)
 (check-expect (asile? SN3) true)
 
+(check-expect (middle? SN1) true)
+(check-expect (middle? 50) false)
+(check-expect (middle? SN3) true)
 
 ; (define (asile? sn) false) ; stub
 
 (define(asile? sn)
+  (or
+     (= sn 1)
+     (= sn 30)
+   )
+)
+
+(define (middle? sn)
   (and
      (>= sn 1)
      (<= sn 30)
