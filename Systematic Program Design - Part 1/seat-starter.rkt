@@ -21,6 +21,8 @@
 
 ; (define (asile? sn) false) ; stub
 
+;; asile? -> Boolean
+;; produce true if number is on the boundries of seat numbers
 (define(asile? sn)
   (or
      (= sn 1)
@@ -28,6 +30,8 @@
    )
 )
 
+;; middle? -> Boolean
+;; produce true if number is on the middle of seat numbers
 (define (middle? sn)
   (and
      (>= sn 1)
