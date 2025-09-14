@@ -1,3 +1,4 @@
+package person;
 interface IPerson {
     public String getName();
     public int getAge();
